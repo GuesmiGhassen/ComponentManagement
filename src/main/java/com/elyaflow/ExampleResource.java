@@ -1,5 +1,6 @@
 package com.elyaflow;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -10,7 +11,7 @@ public class ExampleResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from Quarkus REST";
+    public Uni<String> hello() {
+        return Uni.createFrom().item("Hello Reactive World");
     }
 }

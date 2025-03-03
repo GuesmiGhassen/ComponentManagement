@@ -1,16 +1,21 @@
-package com.elyaflow.application.api;
+package com.elyaflow.application.rest;
 
-
-import com.elyaflow.domain.model.Component;
-import jakarta.ws.rs.*;
+import com.elyaflow.application.rest.model.RequestDTO;
+import io.smallrye.mutiny.Uni;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Path("/api")
@@ -25,9 +30,8 @@ public interface ComponentApi {
     })
     @POST
     @Path("/component")
-    Response createComponent(
-            @Parameter(description = "Component name", required = true)
-            String componentName
+    Uni<Response> createComponent(
+            @RequestBody @Valid RequestDTO componentDto
     );
 
 
@@ -37,7 +41,7 @@ public interface ComponentApi {
     })
     @GET
     @Path("/components")
-    List<ComponentDTO> getAllComponents();
+    Uni<Response> getAllComponents();
 
 
     @Operation(summary = "Get component by Id", description = "Returns a component by Id.")
@@ -47,7 +51,7 @@ public interface ComponentApi {
     })
     @GET
     @Path("/component/{id}")
-    Optional<Component> findComponentById(
+    Uni<Response> findComponentById(
             @Parameter(description = "Component ID", required = true)
             @PathParam("id") UUID id
     );
@@ -59,11 +63,10 @@ public interface ComponentApi {
     })
     @PUT
     @Path("/component/update/{id}")
-    Component updateComponent(
+    Uni<Response> updateComponent(
             @Parameter(description = "Component ID", required = true)
             @PathParam("id") UUID id,
-            @Parameter(description = "Updated component name", required = true)
-            String name
+            @RequestBody @Valid RequestDTO componentDto
     );
 
 
@@ -74,7 +77,7 @@ public interface ComponentApi {
     })
     @DELETE
     @Path("/component/delete/{id}")
-    void deleteComponent(
+    Uni<Response> deleteComponent(
             @Parameter(description = "Component ID", required = true)
             @PathParam("id") UUID id
     );

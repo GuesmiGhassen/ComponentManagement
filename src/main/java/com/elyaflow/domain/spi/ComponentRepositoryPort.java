@@ -2,14 +2,14 @@ package com.elyaflow.domain.spi;
 
 
 import com.elyaflow.domain.model.Component;
+import io.smallrye.mutiny.Uni;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ComponentRepositoryPort {
-    void save(Component component);
-    Optional<Component> findById(UUID id);
-    List<Component> findAll();
-    void deleteById(UUID id);
+    Uni<Component> save(Component component);
+    Uni<Component> findById(UUID id);
+    Uni<List<Component>> findAll();
+    Uni<Boolean> deleteById(UUID id);
 }

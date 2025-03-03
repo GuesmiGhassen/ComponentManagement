@@ -1,0 +1,21 @@
+quarkus:
+  log:
+    category:
+      io.quarkus.hibernate.reactive:
+        "level": DEBUG
+      io.vertx.pgclient:
+        "level": DEBUG
+  hibernate-orm:
+    database:
+      generation: update
+
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: admin
+    reactive:
+      url: vertx-reactive:postgresql://localhost:5432/componentdb
+
+  swagger-ui:
+    always-include: true
+    path: /swagger-ui
